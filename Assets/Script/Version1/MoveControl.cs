@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MoveControl : MonoBehaviour
 {
@@ -73,6 +74,14 @@ public class MoveControl : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             _cntBulletRemain += (_maxBullet / 2);
+        }
+        else if (Input.GetKeyDown(KeyCode.F1))
+        {
+            SceneManager.LoadScene(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.F2))
+        {
+            SceneManager.LoadScene(1);
         }
         _cntBulletRemain += _supplyRate * Time.deltaTime;
         _cntBulletRemain = Mathf.Min(_cntBulletRemain, _maxBullet);
