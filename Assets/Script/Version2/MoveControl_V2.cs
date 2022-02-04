@@ -11,6 +11,7 @@ public class MoveControl_V2 : MonoBehaviour
     public AudioSource Audio;
 
     Rigidbody _rigidbody;
+    float _speedHorizontalOriginal;
     float _speedHorizontal;
     float _speedTilt;
     float _maxTiltAngle;
@@ -23,7 +24,8 @@ public class MoveControl_V2 : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _speedHorizontal = 10f;
+        _speedHorizontalOriginal = 10f;
+        _speedHorizontal = _speedHorizontalOriginal;
         _speedTilt = 10f;
         _maxTiltAngle = 35f;
         _fireRate = 0.5f;
@@ -43,6 +45,9 @@ public class MoveControl_V2 : MonoBehaviour
             return;
         }
 
+        float level = GameStateManager_V2.s_dangerLevel;
+        _speedHorizontal = _speedHorizontalOriginal - level * 30f;
+        _speedHorizontal = Mathf.Max(_speedHorizontal, 1f);
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
         _rigidbody.velocity = _speedHorizontal * movement;
 

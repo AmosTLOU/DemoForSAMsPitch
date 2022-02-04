@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class FinalBadBallMove : MonoBehaviour
 {
-   Slider _dangerLevel;
-
     Rigidbody _rb;
     Transform _tf;
     
@@ -41,8 +39,6 @@ public class FinalBadBallMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _dangerLevel = FindObjectOfType<Slider>();
-
         _rb = GetComponent<Rigidbody>();
         AssignVelocity();
         _tf = GetComponent<Transform>();
@@ -78,11 +74,8 @@ public class FinalBadBallMove : MonoBehaviour
         if (other.gameObject.name == "Container")
         {
             Destroy(gameObject);
-            float level = _dangerLevel.value;
-            level += 0.1f;
-            _dangerLevel.value = level;
-            if (Mathf.Abs(GameStateManager.s_dangerLevelToEndGame - level) <= 0.01f)
-                GameStateManager.s_gameEnd = true;
+            GameStateManager.s_dangerLevel += 0.1f;
+            GameStateManager.s_dangerLevel = Mathf.Min(GameStateManager.s_dangerLevel, 1f);
         }
     }
 }

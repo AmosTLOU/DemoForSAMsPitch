@@ -40,6 +40,10 @@ public class BulletMove : MonoBehaviour
             Destroy(gameObject);
             Destroy(collision.gameObject);
             Instantiate(VFXGetTarget, _tf.position, _tf.rotation);
+            GameStateManager.s_dangerLevel -= 0.1f;
+            GameStateManager.s_dangerLevel = Mathf.Max(GameStateManager.s_dangerLevel, 0f);
+            GameStateManager_V2.s_dangerLevel -= 0.1f;
+            GameStateManager_V2.s_dangerLevel = Mathf.Max(GameStateManager_V2.s_dangerLevel, 0f);
         }
         if (collision.gameObject.CompareTag("WallHorizontal") || collision.gameObject.CompareTag("WallVertical"))
         {

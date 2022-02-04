@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour
         _targetManeuver = 0f;
         _smoothing = 1f;
         _followSpeed = 2.5f;
-        _fireRate = 1f;
+        _fireRate = 2f;
         _lastFireTime = float.NegativeInfinity;
 
         StartCoroutine(SetTargetManeuver());

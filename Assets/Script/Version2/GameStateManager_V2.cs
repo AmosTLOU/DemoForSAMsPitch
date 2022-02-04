@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class GameStateManager_V2 : MonoBehaviour
 {
+    
     public GameObject GoGameStart;
     public GameObject GoGameOver;
 
-    public static float s_lightIntensityToEndGame;
+    public static float s_dangerLevelToEndGame;
+    public static float s_dangerLevel;
     public static bool s_gameEnd;
+
 
     IEnumerator ShowForAWhile(GameObject go, float timeToShow)
     {
@@ -20,15 +23,19 @@ public class GameStateManager_V2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        s_lightIntensityToEndGame = 8f;
+        s_dangerLevelToEndGame = 1f;
+        s_dangerLevel = 0f;
         s_gameEnd = false;
         StartCoroutine(ShowForAWhile(GoGameStart, 3f));
         GoGameOver.SetActive(false);
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Abs(s_dangerLevelToEndGame - s_dangerLevel) <= 0.01f)
+            s_gameEnd = true;
         if (s_gameEnd)
             GoGameOver.SetActive(true);
     }

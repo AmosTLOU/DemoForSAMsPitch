@@ -11,7 +11,8 @@ public class MoveControl : MonoBehaviour
     public AudioSource Audio;
 
     Rigidbody _rigidbody;
-    float SpeedHorizontal;
+    float _speedHorizontalOriginal;
+    float _speedHorizontal;
     float _speedTilt;
     float _maxTiltAngle;
     float _fireRate;
@@ -23,7 +24,8 @@ public class MoveControl : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        SpeedHorizontal = 10f;
+        _speedHorizontalOriginal = 10f;
+        _speedHorizontal = _speedHorizontalOriginal;
         _speedTilt = 10f;
         _maxTiltAngle = 35f;
         _fireRate = 0.5f;
@@ -43,8 +45,11 @@ public class MoveControl : MonoBehaviour
             return;
         }
 
+        float level = GameStateManager.s_dangerLevel;
+        _speedHorizontal = _speedHorizontalOriginal - level * 30f;
+        _speedHorizontal = Mathf.Max(_speedHorizontal, 1f);
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
-        _rigidbody.velocity = SpeedHorizontal * movement;
+        _rigidbody.velocity = _speedHorizontal * movement;
 
         float rotation_z = Mathf.Clamp(_rigidbody.velocity.x * -_speedTilt, -_maxTiltAngle, _maxTiltAngle);
         transform.eulerAngles = new Vector3(0f, 0f, rotation_z);
